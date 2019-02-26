@@ -25,9 +25,9 @@ io.sockets.on('connection', function (socket) {
 async.retry(
   {times: 1000, interval: 1000},
   function(callback) {
-    pg.connect('postgres://postgres@db/postgres', function(err, client, done) {
+    pg.connect('postgres://postgres@db-statefulset-replica/postgres', function(err, client, done) {
       if (err) {
-        console.error("Waiting for db");
+        console.error("Waiting for Stateful PostGreSQL Replica db");
       }
       callback(err, client);
     });
@@ -36,7 +36,7 @@ async.retry(
     if (err) {
       return console.error("Giving up");
     }
-    console.log("Connected to db");
+    console.log("Connected to Stateful PostGreSQL Replica db");
     getVotes(client);
   }
 );
